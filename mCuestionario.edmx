@@ -1,0 +1,740 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="imDesarrolloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="catGenero">
+          <Key>
+            <PropertyRef Name="GeneroID" />
+          </Key>
+          <Property Name="GeneroID" Type="int" Nullable="false" />
+          <Property Name="Genero" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="catMateria">
+          <Key>
+            <PropertyRef Name="MateriaID" />
+          </Key>
+          <Property Name="MateriaID" Type="int" Nullable="false" />
+          <Property Name="Materia" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateriaTema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="catMateriaTema">
+          <Key>
+            <PropertyRef Name="MateriaTemaID" />
+          </Key>
+          <Property Name="MateriaTema" Type="varchar" MaxLength="100" />
+          <Property Name="MateriaID" Type="int" />
+          <Property Name="MateriaOrdenID" Type="int" />
+          <Property Name="MateriaTemaID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateriaTemaPregunta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="catMateriaTemaPregunta">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaID" />
+          </Key>
+          <Property Name="TipoPreguntaID" Type="int" />
+          <Property Name="MateriaTemaPregunta" Type="varchar(max)" />
+          <Property Name="MateriaTemaID" Type="int" />
+          <Property Name="MateriaTemaPreguntaID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateriaTemaPreguntaRespuesta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="catMateriaTemaPreguntaRespuesta">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaRespuestaID" />
+          </Key>
+          <Property Name="MateriaTemaPreguntaRespuesta" Type="varchar(max)" />
+          <Property Name="Respuesta" Type="bit" />
+          <Property Name="MateriaTemaPreguntaID" Type="int" />
+          <Property Name="Justificacion" Type="varchar(max)" />
+          <Property Name="MateriaTemaPreguntaRespuestaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catMateriaTemaPreguntaRespuestaBitacora">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaRespuestaBitacoraID" />
+          </Key>
+          <Property Name="TipoPreguntaID" Type="int" />
+          <Property Name="MateriaTemaPreguntaRespuestaID" Type="int" />
+          <Property Name="UsuarioID" Type="uniqueidentifier" />
+          <Property Name="FechaRegistro" Type="date" />
+          <Property Name="MateriaTemaPreguntaID" Type="int" />
+          <Property Name="MateriaTemaPreguntaRespuestaBitacoraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catMateriaTemaSintesis">
+          <Key>
+            <PropertyRef Name="MateriaTemaSintesisID" />
+          </Key>
+          <Property Name="MateriaTemaSintesisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sintesis" Type="varchar(max)" />
+          <Property Name="UsuarioID" Type="uniqueidentifier" />
+          <Property Name="FechaRegistro" Type="date" />
+          <Property Name="MateriaTemaID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCorreoNotificacion">
+          <Key>
+            <PropertyRef Name="CorreoNotificacionID" />
+          </Key>
+          <Property Name="CorreoNotificacionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" />
+          <Property Name="Clave" Type="varchar" MaxLength="50" />
+          <Property Name="Asunto" Type="varchar" MaxLength="50" />
+          <Property Name="SMTP" Type="varchar" MaxLength="50" />
+          <Property Name="Puerto" Type="int" />
+          <Property Name="EstatusRegistroID" Type="int" />
+          <Property Name="FechaRegistro" Type="date" />
+          <Property Name="CorporativoID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="tblMexCP">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+            <PropertyRef Name="id_asenta_cpcons" />
+          </Key>
+          <Property Name="d_codigo" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="d_asenta" Type="varchar" MaxLength="60" />
+          <Property Name="d_tipo_asenta" Type="varchar" MaxLength="30" />
+          <Property Name="D_mnpio" Type="varchar" MaxLength="60" />
+          <Property Name="d_estado" Type="varchar" MaxLength="60" />
+          <Property Name="d_ciudad" Type="varchar" MaxLength="60" />
+          <Property Name="d_CP" Type="varchar" MaxLength="6" />
+          <Property Name="c_estado" Type="varchar" MaxLength="6" />
+          <Property Name="c_oficina" Type="varchar" MaxLength="6" />
+          <Property Name="c_CP" Type="varchar" MaxLength="6" />
+          <Property Name="c_tipo_asenta" Type="varchar" MaxLength="6" />
+          <Property Name="c_mnpio" Type="varchar" MaxLength="6" />
+          <Property Name="id_asenta_cpcons" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="d_zona" Type="varchar" MaxLength="6" />
+          <Property Name="c_cve_ciudad" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="tblUbicaciones">
+          <Key>
+            <PropertyRef Name="UbicacionID" />
+          </Key>
+          <Property Name="UbicacionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TipoUbicacionID" Type="int" />
+          <Property Name="CalleNumero" Type="varchar" MaxLength="150" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="6" />
+          <Property Name="ColoniaID" Type="varchar" MaxLength="6" />
+          <Property Name="EstatusRegistroID" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUsuarios">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
+          <Property Name="PerfilID" Type="int" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GeneroID" Type="int" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="CorreoPersonal" Type="varchar" MaxLength="50" />
+          <Property Name="CorreInstitucional" Type="varchar" MaxLength="50" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" />
+          <Property Name="TelefonoContacto" Type="varchar" MaxLength="50" />
+          <Property Name="UbicacionID" Type="uniqueidentifier" />
+          <Property Name="CodigoPromo" Type="varchar" MaxLength="50" />
+          <Property Name="EstatusRegistroID" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="date" Nullable="false" />
+          <Property Name="CorporativoID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="tblUsuariosCentros">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
+          <Property Name="PerfilID" Type="int" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GeneroID" Type="int" Nullable="false" />
+          <Property Name="CorreoPersonal" Type="varchar" MaxLength="50" />
+          <Property Name="CorreoTrabajo" Type="varchar" MaxLength="50" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" />
+          <Property Name="UbicacionID" Type="int" Nullable="false" />
+          <Property Name="EstatusRegistroID" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="date" Nullable="false" />
+          <Property Name="CentroID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblUbicaciones_tblMexCP">
+          <End Role="tblMexCP" Type="Self.tblMexCP" Multiplicity="0..1" />
+          <End Role="tblUbicaciones" Type="Self.tblUbicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMexCP">
+              <PropertyRef Name="d_codigo" />
+              <PropertyRef Name="id_asenta_cpcons" />
+            </Principal>
+            <Dependent Role="tblUbicaciones">
+              <PropertyRef Name="CodigoPostal" />
+              <PropertyRef Name="ColoniaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUsuarios_catGenero">
+          <End Role="catGenero" Type="Self.catGenero" Multiplicity="0..1" />
+          <End Role="tblUsuarios" Type="Self.tblUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catGenero">
+              <PropertyRef Name="GeneroID" />
+            </Principal>
+            <Dependent Role="tblUsuarios">
+              <PropertyRef Name="GeneroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="PreguntasSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MateriaIDFiltro" Type="int" Mode="In" />
+          <Parameter Name="MateriaTemaIDFiltro" Type="int" Mode="In" />
+          <Parameter Name="TipoPregunta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RespuestasSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MateriaIDFiltro" Type="int" Mode="In" />
+          <Parameter Name="MateriaTemaIDFiltro" Type="int" Mode="In" />
+          <Parameter Name="MateriaTemaPreguntaIDFiltro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="tblPreguntasRespuestas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MateriaF" Type="int" Mode="In" />
+          <Parameter Name="UsuarioFiltrado" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Materia" Type="varchar" MaxLength="50" />
+                <Property Name="DiagnoticoP" Type="int" />
+                <Property Name="CuestionarioP" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="imDesarrolloModelStoreContainer">
+          <EntitySet Name="catGenero" EntityType="Self.catGenero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catMateriaTemaPreguntaRespuestaBitacora" EntityType="Self.catMateriaTemaPreguntaRespuestaBitacora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catMateriaTemaSintesis" EntityType="Self.catMateriaTemaSintesis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCorreoNotificacion" EntityType="Self.tblCorreoNotificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMexCP" EntityType="Self.tblMexCP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUbicaciones" EntityType="Self.tblUbicaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsuarios" EntityType="Self.tblUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsuariosCentros" EntityType="Self.tblUsuariosCentros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catMateria" EntityType="Self.catMateria" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [catMateria].[MateriaID] AS [MateriaID], 
+    [catMateria].[Materia] AS [Materia]
+    FROM [dbo].[catMateria] AS [catMateria]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="catMateriaTema" EntityType="Self.catMateriaTema" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [catMateriaTema].[MateriaTema] AS [MateriaTema], 
+    [catMateriaTema].[MateriaID] AS [MateriaID], 
+    [catMateriaTema].[MateriaOrdenID] AS [MateriaOrdenID], 
+    [catMateriaTema].[MateriaTemaID] AS [MateriaTemaID]
+    FROM [dbo].[catMateriaTema] AS [catMateriaTema]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="catMateriaTemaPregunta" EntityType="Self.catMateriaTemaPregunta" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [catMateriaTemaPregunta].[TipoPreguntaID] AS [TipoPreguntaID], 
+    [catMateriaTemaPregunta].[MateriaTemaPregunta] AS [MateriaTemaPregunta], 
+    [catMateriaTemaPregunta].[MateriaTemaID] AS [MateriaTemaID], 
+    [catMateriaTemaPregunta].[MateriaTemaPreguntaID] AS [MateriaTemaPreguntaID]
+    FROM [dbo].[catMateriaTemaPregunta] AS [catMateriaTemaPregunta]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="catMateriaTemaPreguntaRespuesta" EntityType="Self.catMateriaTemaPreguntaRespuesta" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [catMateriaTemaPreguntaRespuesta].[MateriaTemaPreguntaRespuesta] AS [MateriaTemaPreguntaRespuesta], 
+    [catMateriaTemaPreguntaRespuesta].[Respuesta] AS [Respuesta], 
+    [catMateriaTemaPreguntaRespuesta].[MateriaTemaPreguntaID] AS [MateriaTemaPreguntaID], 
+    [catMateriaTemaPreguntaRespuesta].[Justificacion] AS [Justificacion], 
+    [catMateriaTemaPreguntaRespuesta].[MateriaTemaPreguntaRespuestaID] AS [MateriaTemaPreguntaRespuestaID]
+    FROM [dbo].[catMateriaTemaPreguntaRespuesta] AS [catMateriaTemaPreguntaRespuesta]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblUbicaciones_tblMexCP" Association="Self.FK_tblUbicaciones_tblMexCP">
+            <End Role="tblMexCP" EntitySet="tblMexCP" />
+            <End Role="tblUbicaciones" EntitySet="tblUbicaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUsuarios_catGenero" Association="Self.FK_tblUsuarios_catGenero">
+            <End Role="catGenero" EntitySet="catGenero" />
+            <End Role="tblUsuarios" EntitySet="tblUsuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="imDesarrolloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="imDesarrolloEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="PreguntasSP" ReturnType="Collection(imDesarrolloModel.PreguntasSP_Result)">
+            <Parameter Name="MateriaIDFiltro" Mode="In" Type="Int32" />
+            <Parameter Name="MateriaTemaIDFiltro" Mode="In" Type="Int32" />
+            <Parameter Name="TipoPregunta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RespuestasSP" ReturnType="Collection(imDesarrolloModel.RespuestasSP_Result)">
+            <Parameter Name="MateriaIDFiltro" Mode="In" Type="Int32" />
+            <Parameter Name="MateriaTemaIDFiltro" Mode="In" Type="Int32" />
+            <Parameter Name="MateriaTemaPreguntaIDFiltro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="tblPreguntasRespuestas" IsComposable="true" ReturnType="Collection(imDesarrolloModel.tblPreguntasRespuestas_Result)">
+            <Parameter Name="MateriaF" Mode="In" Type="Int32" />
+            <Parameter Name="UsuarioFiltrado" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="catMateriaTemaPreguntaRespuestaBitacora" EntityType="imDesarrolloModel.catMateriaTemaPreguntaRespuestaBitacora" />
+          <EntitySet Name="catMateriaTemaSintesis" EntityType="imDesarrolloModel.catMateriaTemaSintesis" />
+          <EntitySet Name="tblCorreoNotificacion" EntityType="imDesarrolloModel.tblCorreoNotificacion" />
+          <EntitySet Name="tblMexCP" EntityType="imDesarrolloModel.tblMexCP" />
+          <EntitySet Name="tblUsuarios" EntityType="imDesarrolloModel.tblUsuarios" />
+          <EntitySet Name="tblUsuariosCentros" EntityType="imDesarrolloModel.tblUsuariosCentros" />
+          <EntitySet Name="catMateria" EntityType="imDesarrolloModel.catMateria" />
+          <EntitySet Name="catMateriaTema" EntityType="imDesarrolloModel.catMateriaTema" />
+          <EntitySet Name="catMateriaTemaPregunta" EntityType="imDesarrolloModel.catMateriaTemaPregunta" />
+          <EntitySet Name="catMateriaTemaPreguntaRespuesta" EntityType="imDesarrolloModel.catMateriaTemaPreguntaRespuesta" />
+          <EntitySet Name="tblUbicaciones" EntityType="imDesarrolloModel.tblUbicaciones" />
+          <AssociationSet Name="FK_tblUbicaciones_tblMexCP" Association="imDesarrolloModel.FK_tblUbicaciones_tblMexCP">
+            <End Role="tblMexCP" EntitySet="tblMexCP" />
+            <End Role="tblUbicaciones" EntitySet="tblUbicaciones" />
+          </AssociationSet>
+          <EntitySet Name="catGenero" EntityType="imDesarrolloModel.catGenero" />
+          <AssociationSet Name="FK_tblUsuarios_catGenero" Association="imDesarrolloModel.FK_tblUsuarios_catGenero">
+            <End Role="catGenero" EntitySet="catGenero" />
+            <End Role="tblUsuarios" EntitySet="tblUsuarios" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="PreguntasSP_Result">
+          <Property Type="Int64" Name="NuevoID" Nullable="true" />
+          <Property Type="String" Name="MateriaTemaPregunta" Nullable="true" />
+          <Property Type="Int32" Name="MateriaTemaPreguntaID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="RespuestasSP_Result">
+          <Property Type="Int64" Name="NuevoID" Nullable="true" />
+          <Property Type="String" Name="MateriaTemaPreguntaRespuesta" Nullable="true" />
+          <Property Type="Int32" Name="MateriaTemaPreguntaRespuestaID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="tblPreguntasRespuestas_Result">
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DiagnoticoP" Nullable="true" />
+          <Property Type="Int32" Name="CuestionarioP" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="catMateriaTemaPreguntaRespuestaBitacora">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaRespuestaBitacoraID" />
+          </Key>
+          <Property Name="TipoPreguntaID" Type="Int32" />
+          <Property Name="MateriaTemaPreguntaRespuestaID" Type="Int32" />
+          <Property Name="UsuarioID" Type="Guid" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
+          <Property Name="MateriaTemaPreguntaID" Type="Int32" />
+          <Property Name="MateriaTemaPreguntaRespuestaBitacoraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="catMateriaTemaSintesis">
+          <Key>
+            <PropertyRef Name="MateriaTemaSintesisID" />
+          </Key>
+          <Property Name="MateriaTemaSintesisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sintesis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioID" Type="Guid" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
+          <Property Name="MateriaTemaID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblCorreoNotificacion">
+          <Key>
+            <PropertyRef Name="CorreoNotificacionID" />
+          </Key>
+          <Property Name="CorreoNotificacionID" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Asunto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Puerto" Type="Int32" />
+          <Property Name="EstatusRegistroID" Type="Int32" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
+          <Property Name="CorporativoID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="tblMexCP">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+            <PropertyRef Name="id_asenta_cpcons" />
+          </Key>
+          <Property Name="d_codigo" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="d_asenta" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="d_tipo_asenta" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="D_mnpio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="d_estado" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="d_ciudad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="d_CP" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_estado" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_oficina" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_CP" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_tipo_asenta" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_mnpio" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="id_asenta_cpcons" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="d_zona" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="c_cve_ciudad" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUbicaciones" Relationship="imDesarrolloModel.FK_tblUbicaciones_tblMexCP" FromRole="tblMexCP" ToRole="tblUbicaciones" />
+        </EntityType>
+        <EntityType Name="tblUsuarios">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Guid" Nullable="false" />
+          <Property Name="TipoUsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="PerfilID" Type="Int32" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GeneroID" Type="Int32" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="CorreoPersonal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorreInstitucional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TelefonoContacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UbicacionID" Type="Guid" />
+          <Property Name="CodigoPromo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstatusRegistroID" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CorporativoID" Type="Guid" />
+          <NavigationProperty Name="catGenero" Relationship="imDesarrolloModel.FK_tblUsuarios_catGenero" FromRole="tblUsuarios" ToRole="catGenero" />
+        </EntityType>
+        <EntityType Name="tblUsuariosCentros">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Guid" Nullable="false" />
+          <Property Name="TipoUsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="PerfilID" Type="Int32" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GeneroID" Type="Int32" Nullable="false" />
+          <Property Name="CorreoPersonal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoTrabajo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UbicacionID" Type="Int32" Nullable="false" />
+          <Property Name="EstatusRegistroID" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CentroID" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catMateria">
+          <Key>
+            <PropertyRef Name="MateriaID" />
+          </Key>
+          <Property Name="MateriaID" Type="Int32" Nullable="false" />
+          <Property Name="Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="catMateriaTema">
+          <Key>
+            <PropertyRef Name="MateriaTemaID" />
+          </Key>
+          <Property Name="MateriaTema" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MateriaID" Type="Int32" />
+          <Property Name="MateriaOrdenID" Type="Int32" />
+          <Property Name="MateriaTemaID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catMateriaTemaPregunta">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaID" />
+          </Key>
+          <Property Name="TipoPreguntaID" Type="Int32" />
+          <Property Name="MateriaTemaPregunta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MateriaTemaID" Type="Int32" />
+          <Property Name="MateriaTemaPreguntaID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catMateriaTemaPreguntaRespuesta">
+          <Key>
+            <PropertyRef Name="MateriaTemaPreguntaRespuestaID" />
+          </Key>
+          <Property Name="MateriaTemaPreguntaRespuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Respuesta" Type="Boolean" />
+          <Property Name="MateriaTemaPreguntaID" Type="Int32" />
+          <Property Name="Justificacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MateriaTemaPreguntaRespuestaID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUbicaciones">
+          <Key>
+            <PropertyRef Name="UbicacionID" />
+          </Key>
+          <Property Name="UbicacionID" Type="Guid" Nullable="false" />
+          <Property Name="TipoUbicacionID" Type="Int32" />
+          <Property Name="CalleNumero" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ColoniaID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="EstatusRegistroID" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblMexCP" Relationship="imDesarrolloModel.FK_tblUbicaciones_tblMexCP" FromRole="tblUbicaciones" ToRole="tblMexCP" />
+        </EntityType>
+        <Association Name="FK_tblUbicaciones_tblMexCP">
+          <End Type="imDesarrolloModel.tblMexCP" Role="tblMexCP" Multiplicity="0..1" />
+          <End Type="imDesarrolloModel.tblUbicaciones" Role="tblUbicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMexCP">
+              <PropertyRef Name="d_codigo" />
+              <PropertyRef Name="id_asenta_cpcons" />
+            </Principal>
+            <Dependent Role="tblUbicaciones">
+              <PropertyRef Name="CodigoPostal" />
+              <PropertyRef Name="ColoniaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="catGenero">
+          <Key>
+            <PropertyRef Name="GeneroID" />
+          </Key>
+          <Property Name="GeneroID" Type="Int32" Nullable="false" />
+          <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUsuarios" Relationship="imDesarrolloModel.FK_tblUsuarios_catGenero" FromRole="catGenero" ToRole="tblUsuarios" />
+        </EntityType>
+        <Association Name="FK_tblUsuarios_catGenero">
+          <End Type="imDesarrolloModel.catGenero" Role="catGenero" Multiplicity="0..1" />
+          <End Type="imDesarrolloModel.tblUsuarios" Role="tblUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catGenero">
+              <PropertyRef Name="GeneroID" />
+            </Principal>
+            <Dependent Role="tblUsuarios">
+              <PropertyRef Name="GeneroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="imDesarrolloModelStoreContainer" CdmEntityContainer="imDesarrolloEntities">
+          <FunctionImportMapping FunctionImportName="PreguntasSP" FunctionName="imDesarrolloModel.Store.PreguntasSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="imDesarrolloModel.PreguntasSP_Result">
+                <ScalarProperty Name="NuevoID" ColumnName="NuevoID" />
+                <ScalarProperty Name="MateriaTemaPregunta" ColumnName="MateriaTemaPregunta" />
+                <ScalarProperty Name="MateriaTemaPreguntaID" ColumnName="MateriaTemaPreguntaID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RespuestasSP" FunctionName="imDesarrolloModel.Store.RespuestasSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="imDesarrolloModel.RespuestasSP_Result">
+                <ScalarProperty Name="NuevoID" ColumnName="NuevoID" />
+                <ScalarProperty Name="MateriaTemaPreguntaRespuesta" ColumnName="MateriaTemaPreguntaRespuesta" />
+                <ScalarProperty Name="MateriaTemaPreguntaRespuestaID" ColumnName="MateriaTemaPreguntaRespuestaID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tblPreguntasRespuestas" FunctionName="imDesarrolloModel.Store.tblPreguntasRespuestas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="imDesarrolloModel.tblPreguntasRespuestas_Result">
+                <ScalarProperty Name="Materia" ColumnName="Materia" />
+                <ScalarProperty Name="DiagnoticoP" ColumnName="DiagnoticoP" />
+                <ScalarProperty Name="CuestionarioP" ColumnName="CuestionarioP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="catMateriaTemaPreguntaRespuestaBitacora">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateriaTemaPreguntaRespuestaBitacora">
+              <MappingFragment StoreEntitySet="catMateriaTemaPreguntaRespuestaBitacora">
+                <ScalarProperty Name="MateriaTemaPreguntaRespuestaBitacoraID" ColumnName="MateriaTemaPreguntaRespuestaBitacoraID" />
+                <ScalarProperty Name="MateriaTemaPreguntaID" ColumnName="MateriaTemaPreguntaID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="MateriaTemaPreguntaRespuestaID" ColumnName="MateriaTemaPreguntaRespuestaID" />
+                <ScalarProperty Name="TipoPreguntaID" ColumnName="TipoPreguntaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catMateriaTemaSintesis">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateriaTemaSintesis">
+              <MappingFragment StoreEntitySet="catMateriaTemaSintesis">
+                <ScalarProperty Name="MateriaTemaID" ColumnName="MateriaTemaID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Sintesis" ColumnName="Sintesis" />
+                <ScalarProperty Name="MateriaTemaSintesisID" ColumnName="MateriaTemaSintesisID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCorreoNotificacion">
+            <EntityTypeMapping TypeName="imDesarrolloModel.tblCorreoNotificacion">
+              <MappingFragment StoreEntitySet="tblCorreoNotificacion">
+                <ScalarProperty Name="CorporativoID" ColumnName="CorporativoID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="EstatusRegistroID" ColumnName="EstatusRegistroID" />
+                <ScalarProperty Name="Puerto" ColumnName="Puerto" />
+                <ScalarProperty Name="SMTP" ColumnName="SMTP" />
+                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="CorreoNotificacionID" ColumnName="CorreoNotificacionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMexCP">
+            <EntityTypeMapping TypeName="imDesarrolloModel.tblMexCP">
+              <MappingFragment StoreEntitySet="tblMexCP">
+                <ScalarProperty Name="c_cve_ciudad" ColumnName="c_cve_ciudad" />
+                <ScalarProperty Name="d_zona" ColumnName="d_zona" />
+                <ScalarProperty Name="id_asenta_cpcons" ColumnName="id_asenta_cpcons" />
+                <ScalarProperty Name="c_mnpio" ColumnName="c_mnpio" />
+                <ScalarProperty Name="c_tipo_asenta" ColumnName="c_tipo_asenta" />
+                <ScalarProperty Name="c_CP" ColumnName="c_CP" />
+                <ScalarProperty Name="c_oficina" ColumnName="c_oficina" />
+                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+                <ScalarProperty Name="d_CP" ColumnName="d_CP" />
+                <ScalarProperty Name="d_ciudad" ColumnName="d_ciudad" />
+                <ScalarProperty Name="d_estado" ColumnName="d_estado" />
+                <ScalarProperty Name="D_mnpio" ColumnName="D_mnpio" />
+                <ScalarProperty Name="d_tipo_asenta" ColumnName="d_tipo_asenta" />
+                <ScalarProperty Name="d_asenta" ColumnName="d_asenta" />
+                <ScalarProperty Name="d_codigo" ColumnName="d_codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsuarios">
+            <EntityTypeMapping TypeName="imDesarrolloModel.tblUsuarios">
+              <MappingFragment StoreEntitySet="tblUsuarios">
+                <ScalarProperty Name="CorporativoID" ColumnName="CorporativoID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="EstatusRegistroID" ColumnName="EstatusRegistroID" />
+                <ScalarProperty Name="CodigoPromo" ColumnName="CodigoPromo" />
+                <ScalarProperty Name="UbicacionID" ColumnName="UbicacionID" />
+                <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="CorreInstitucional" ColumnName="CorreInstitucional" />
+                <ScalarProperty Name="CorreoPersonal" ColumnName="CorreoPersonal" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="GeneroID" ColumnName="GeneroID" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
+                <ScalarProperty Name="PerfilID" ColumnName="PerfilID" />
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsuariosCentros">
+            <EntityTypeMapping TypeName="imDesarrolloModel.tblUsuariosCentros">
+              <MappingFragment StoreEntitySet="tblUsuariosCentros">
+                <ScalarProperty Name="CentroID" ColumnName="CentroID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="EstatusRegistroID" ColumnName="EstatusRegistroID" />
+                <ScalarProperty Name="UbicacionID" ColumnName="UbicacionID" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="CorreoTrabajo" ColumnName="CorreoTrabajo" />
+                <ScalarProperty Name="CorreoPersonal" ColumnName="CorreoPersonal" />
+                <ScalarProperty Name="GeneroID" ColumnName="GeneroID" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
+                <ScalarProperty Name="PerfilID" ColumnName="PerfilID" />
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catMateria">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateria">
+              <MappingFragment StoreEntitySet="catMateria">
+                <ScalarProperty Name="Materia" ColumnName="Materia" />
+                <ScalarProperty Name="MateriaID" ColumnName="MateriaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catMateriaTema">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateriaTema">
+              <MappingFragment StoreEntitySet="catMateriaTema">
+                <ScalarProperty Name="MateriaTemaID" ColumnName="MateriaTemaID" />
+                <ScalarProperty Name="MateriaOrdenID" ColumnName="MateriaOrdenID" />
+                <ScalarProperty Name="MateriaID" ColumnName="MateriaID" />
+                <ScalarProperty Name="MateriaTema" ColumnName="MateriaTema" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catMateriaTemaPregunta">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateriaTemaPregunta">
+              <MappingFragment StoreEntitySet="catMateriaTemaPregunta">
+                <ScalarProperty Name="MateriaTemaPreguntaID" ColumnName="MateriaTemaPreguntaID" />
+                <ScalarProperty Name="MateriaTemaID" ColumnName="MateriaTemaID" />
+                <ScalarProperty Name="MateriaTemaPregunta" ColumnName="MateriaTemaPregunta" />
+                <ScalarProperty Name="TipoPreguntaID" ColumnName="TipoPreguntaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catMateriaTemaPreguntaRespuesta">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catMateriaTemaPreguntaRespuesta">
+              <MappingFragment StoreEntitySet="catMateriaTemaPreguntaRespuesta">
+                <ScalarProperty Name="MateriaTemaPreguntaRespuestaID" ColumnName="MateriaTemaPreguntaRespuestaID" />
+                <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
+                <ScalarProperty Name="MateriaTemaPreguntaID" ColumnName="MateriaTemaPreguntaID" />
+                <ScalarProperty Name="Respuesta" ColumnName="Respuesta" />
+                <ScalarProperty Name="MateriaTemaPreguntaRespuesta" ColumnName="MateriaTemaPreguntaRespuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUbicaciones">
+            <EntityTypeMapping TypeName="imDesarrolloModel.tblUbicaciones">
+              <MappingFragment StoreEntitySet="tblUbicaciones">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="EstatusRegistroID" ColumnName="EstatusRegistroID" />
+                <ScalarProperty Name="ColoniaID" ColumnName="ColoniaID" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="CalleNumero" ColumnName="CalleNumero" />
+                <ScalarProperty Name="TipoUbicacionID" ColumnName="TipoUbicacionID" />
+                <ScalarProperty Name="UbicacionID" ColumnName="UbicacionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catGenero">
+            <EntityTypeMapping TypeName="imDesarrolloModel.catGenero">
+              <MappingFragment StoreEntitySet="catGenero">
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="GeneroID" ColumnName="GeneroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
