@@ -7,6 +7,16 @@ namespace wa_Cuestionarios
 {
     public partial class test : System.Web.UI.Page
     {
+        public static Guid empf_ID = Guid.Empty, usrID = Guid.Empty;
+        public static int FiltroMateriaID = 0, OrdenMateriaTemaID = 0, FiltroMateriaTemaID = 0, FiltroMateriaTemaPreguntaID = 0, FiltroPreguntaDiagnostico = 0, FiltroPreguntaTest = 0, FiltroPreguntaID = 0, FiltroPreguntaIDc = 0;
+
+        protected void btnGuardaDiagnostico_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public static DataSet ds;
+        public static DataTable dtPreguntasDiagnostico, dtRespuestasDiagnostico, dtPreguntasCuestionario, dtRespuestasCuestionario;
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -33,6 +43,7 @@ namespace wa_Cuestionarios
 
             if (int_TipoPreguntas == 1)
             {
+                lblTipoPregunta.Text = "Diagnostico";
                 using (var Modelo = new imDesarrolloEntities())
                 {
                     var iModelo = (from a in Modelo.catMateriaTemaPreguntaRespuestaBitacora
@@ -57,7 +68,9 @@ namespace wa_Cuestionarios
                         dtff.Columns.Add("Pregunta", typeof(string));
                         dtff.Columns.Add("PreguntaID", typeof(int));
 
-                        var iModeloP = (from c in Modelo.PreguntasSP(int_FiltroMateriaID, int_FiltroMateriaTemaID, int_TipoPreguntas)
+                        int_CantidadPreguntas = 5;
+
+                        var iModeloP = (from c in Modelo.PreguntasSP(int_FiltroMateriaID, int_FiltroMateriaTemaID, int_CantidadPreguntas)
                                         select c).ToList();
 
                         foreach (var item in iModeloP)
@@ -81,6 +94,57 @@ namespace wa_Cuestionarios
 
                             Modelo.SaveChanges();
                         }
+
+                        DataRow[] foundRows;
+                        foundRows = dtff.Select("NuevoID = 1");
+
+                        FiltroPreguntaID = int.Parse(foundRows[0][2].ToString());
+                    
+                        lblPreguntaF.Text = foundRows[0][1].ToString();
+
+                        rbRespDiag001.Checked = false;
+                        rbRespDiag002.Checked = false;
+                        rbRespDiag003.Checked = false;
+                        rbRespDiag004.Checked = false;
+
+                        using (imDesarrolloEntities mTema = new imDesarrolloEntities())
+                        {
+                            var iRespuesta = (from c in mTema.RespuestasSP(int_FiltroMateriaID, int_FiltroMateriaTemaID, FiltroPreguntaID)
+                                              select c).ToList();
+
+                            int f1 = 1;
+                            foreach (var iResp in iRespuesta)
+                            {
+                                string strlbl = "lblRespuesta00" + f1;
+
+                                if (strlbl == "lblRespuesta001")
+                                {
+                                    lblRespDiag001.Text = iResp.MateriaTemaPreguntaRespuesta;
+                                    lblRespDiagID001.Text = iResp.MateriaTemaPreguntaRespuestaID.ToString();
+                                }
+
+                                if (strlbl == "lblRespuesta002")
+                                {
+                                    lblRespDiag002.Text = iResp.MateriaTemaPreguntaRespuesta;
+                                    lblRespDiagID002.Text = iResp.MateriaTemaPreguntaRespuestaID.ToString();
+                                }
+
+                                if (strlbl == "lblRespuesta003")
+                                {
+                                    lblRespDiag003.Text = iResp.MateriaTemaPreguntaRespuesta;
+                                    lblRespDiagID003.Text = iResp.MateriaTemaPreguntaRespuestaID.ToString();
+                                }
+
+                                if (strlbl == "lblRespuesta004")
+                                {
+                                    lblRespDiag004.Text = iResp.MateriaTemaPreguntaRespuesta;
+                                    lblRespDiagID004.Text = iResp.MateriaTemaPreguntaRespuestaID.ToString();
+                                }
+                                f1 += 1;
+                            }
+                        }
+
+                        //upDiagnostico.Update();
                     }
                     else
                     {

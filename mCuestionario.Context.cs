@@ -40,7 +40,7 @@ namespace wa_Cuestionarios
         public virtual DbSet<tblUbicaciones> tblUbicaciones { get; set; }
         public virtual DbSet<catGenero> catGenero { get; set; }
     
-        public virtual ObjectResult<PreguntasSP_Result> PreguntasSP(Nullable<int> materiaIDFiltro, Nullable<int> materiaTemaIDFiltro, Nullable<int> tipoPregunta)
+        public virtual ObjectResult<PreguntasSP_Result> PreguntasSP(Nullable<int> materiaIDFiltro, Nullable<int> materiaTemaIDFiltro, Nullable<int> cantidadPreguntas)
         {
             var materiaIDFiltroParameter = materiaIDFiltro.HasValue ?
                 new ObjectParameter("MateriaIDFiltro", materiaIDFiltro) :
@@ -50,11 +50,11 @@ namespace wa_Cuestionarios
                 new ObjectParameter("MateriaTemaIDFiltro", materiaTemaIDFiltro) :
                 new ObjectParameter("MateriaTemaIDFiltro", typeof(int));
     
-            var tipoPreguntaParameter = tipoPregunta.HasValue ?
-                new ObjectParameter("TipoPregunta", tipoPregunta) :
-                new ObjectParameter("TipoPregunta", typeof(int));
+            var cantidadPreguntasParameter = cantidadPreguntas.HasValue ?
+                new ObjectParameter("CantidadPreguntas", cantidadPreguntas) :
+                new ObjectParameter("CantidadPreguntas", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PreguntasSP_Result>("PreguntasSP", materiaIDFiltroParameter, materiaTemaIDFiltroParameter, tipoPreguntaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PreguntasSP_Result>("PreguntasSP", materiaIDFiltroParameter, materiaTemaIDFiltroParameter, cantidadPreguntasParameter);
         }
     
         public virtual ObjectResult<RespuestasSP_Result> RespuestasSP(Nullable<int> materiaIDFiltro, Nullable<int> materiaTemaIDFiltro, Nullable<int> materiaTemaPreguntaIDFiltro)

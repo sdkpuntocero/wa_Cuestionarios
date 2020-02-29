@@ -200,7 +200,7 @@ advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateriaTemaPreguntaRespu
         <Function Name="PreguntasSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MateriaIDFiltro" Type="int" Mode="In" />
           <Parameter Name="MateriaTemaIDFiltro" Type="int" Mode="In" />
-          <Parameter Name="TipoPregunta" Type="int" Mode="In" />
+          <Parameter Name="CantidadPreguntas" Type="int" Mode="In" />
         </Function>
         <Function Name="RespuestasSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MateriaIDFiltro" Type="int" Mode="In" />
@@ -277,7 +277,7 @@ advertencia 6002: La tabla o vista 'imDesarrollo.dbo.catMateriaTemaPreguntaRespu
           <FunctionImport Name="PreguntasSP" ReturnType="Collection(imDesarrolloModel.PreguntasSP_Result)">
             <Parameter Name="MateriaIDFiltro" Mode="In" Type="Int32" />
             <Parameter Name="MateriaTemaIDFiltro" Mode="In" Type="Int32" />
-            <Parameter Name="TipoPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="CantidadPreguntas" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="RespuestasSP" ReturnType="Collection(imDesarrolloModel.RespuestasSP_Result)">
             <Parameter Name="MateriaIDFiltro" Mode="In" Type="Int32" />
